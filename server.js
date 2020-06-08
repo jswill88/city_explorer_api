@@ -13,7 +13,7 @@ app.listen(PORT,() => {
   console.log(`listening on ${PORT}`);
 })
 
-app.get('/location', (request,response) =>{
+app.get('/location', (request,response) => {
   try {
     let search_query = request.query.city;
     let geoData = require('./data/location.json');
@@ -41,11 +41,6 @@ app.get('/weather', (request,response) => {
   }
 })
 
-function error(err,response) {
-  console.log('ERROR', err);
-  response.status(500).send('Hmmm, something isn\'t working');
-}
-
 function Location(searchQuery, obj) {
   this.search_query = searchQuery;
   this.formatted_query = obj.display_name;
@@ -58,6 +53,13 @@ function Weather(obj) {
   this.time = obj.datetime;
 }
 
+// 500 error message
+function error(err,response) {
+  console.log('ERROR', err);
+  response.status(500).send('Hmmm, something isn\'t working');
+}
+
+// 404 error message
 app.get('*',(request,response) => {
   response.status(404).send('sorry, this route does not exist');
 })
