@@ -30,8 +30,8 @@ app.get('/weather', (request,response) => {
     let getWeather = require('./data/weather.json');
     let weatherRetun = [];
     for(let i = 0; i < getWeather.data.length; i++) {
-      let dayForcast = new Weather(getWeather.data[i]);
-      weatherRetun.push(dayForcast);
+      let dayForecast = new Weather(getWeather.data[i]);
+      weatherRetun.push(dayForecast);
       console.log(weatherRetun);
     }
     response.status(200).send(weatherRetun);
@@ -54,7 +54,7 @@ function Location(searchQuery, obj) {
 }
 
 function Weather(obj) {
-  this.forcast = obj.weather.description;
+  this.forecast = obj.weather.description;
   this.time = obj.datetime;
 }
 
