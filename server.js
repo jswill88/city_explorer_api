@@ -28,13 +28,9 @@ app.get('/location', (request,response) => {
 app.get('/weather', (request,response) => {
   try{
     let getWeather = require('./data/weather.json');
-    let weatherRetun = [];
-    for(let i = 0; i < getWeather.data.length; i++) {
-      let dayForecast = new Weather(getWeather.data[i]);
-      weatherRetun.push(dayForecast);
-      console.log(weatherRetun);
-    }
-    response.status(200).send(weatherRetun);
+    let returnObj = [];
+    getWeather.data.forEach(day => returnObj.push(new Weather(day)));
+    response.status(200).send(returnObj);
   }
   catch(err) {
     error(err,response);
