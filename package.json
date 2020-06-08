@@ -1,0 +1,24 @@
+{
+  "name": "city_explorer_api",
+  "version": "1.0.0",
+  "description": "**Author**: Joshua Williams **Version**: 1.0.0 (increment the patch/fix version number if you make more commits past your first submission)",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jswill88/city_explorer_api.git"
+  },
+  "author": "Josh Williams",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jswill88/city_explorer_api/issues"
+  },
+  "homepage": "https://github.com/jswill88/city_explorer_api#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1"
+  }
+}
