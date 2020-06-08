@@ -30,12 +30,24 @@ Finish time: 2:44pm
 
 Actual time needed to complete: 29 minutes
 
+
 Number and name of feature: __Locations__
 
 Estimate of time needed to complete: 45 minutes
 
 Start time: 2:45pm
 
-Finish time:
+Finish time: 3:15pm
+
+Actual time needed to complete: 30 minutes
+
+
+Number and name of feature: __Weather__
+
+Estimate of time needed to complete: 30 minutes
+
+Start time: 3:15pm
+
+Finish time: 
 
 Actual time needed to complete:
