@@ -26,6 +26,16 @@ Estimate of time needed to complete: 30 minutes
 
 Start time: 2:15pm
 
-Finish time: _____
+Finish time: 2:44pm
 
-Actual time needed to complete: _____
+Actual time needed to complete: 29 minutes
+
+Number and name of feature: __Locations__
+
+Estimate of time needed to complete: 45 minutes
+
+Start time: 2:45pm
+
+Finish time:
+
+Actual time needed to complete:
