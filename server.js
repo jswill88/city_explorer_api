@@ -27,9 +27,8 @@ app.get('/location', (request,response) => {
 
 app.get('/weather', (request,response) => {
   try{
-    let getWeather = require('./data/weather.json');
-    let returnObj = [];
-    getWeather.data.forEach(day => returnObj.push(new Weather(day)));
+    const getWeather = require('./data/weather.json');
+    const returnObj = getWeather.data.map(day => new Weather(day));
     response.status(200).send(returnObj);
   }
   catch(err) {
