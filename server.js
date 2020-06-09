@@ -22,19 +22,19 @@ app.get('/location', (request, response) => {
     .then(superAgentResults => {
       let returnObj = new Location(search_query, superAgentResults.body[0]);
       response.status(200).send(returnObj);
-    }).catch(err => error(err,response));
-}).then(() => {
-  app.get('/weather', (request, response) => {
-    try {
-      const getWeather = require('./data/weather.json');
-      const returnObj = getWeather.data.map(day => new Weather(day));
-      response.status(200).send(returnObj);
-    }
-    catch (err) {
-      error(err, response);
-    }
-  })
+    }).catch(err => error(err, response));
 })
+
+// app.get('/weather', (request, response) => {
+//   try {
+//     const getWeather = require('./data/weather.json');
+//     const returnObj = getWeather.data.map(day => new Weather(day));
+//     response.status(200).send(returnObj);
+//   }
+//   catch (err) {
+//     error(err, response);
+//   }
+// })
 
 function Location(searchQuery, obj) {
   this.search_query = searchQuery;
