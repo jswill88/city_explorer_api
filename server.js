@@ -25,16 +25,16 @@ app.get('/location', (request, response) => {
     }).catch(err => error(err, response));
 })
 
-// app.get('/weather', (request, response) => {
-//   try {
-//     const getWeather = require('./data/weather.json');
-//     const returnObj = getWeather.data.map(day => new Weather(day));
-//     response.status(200).send(returnObj);
-//   }
-//   catch (err) {
-//     error(err, response);
-//   }
-// })
+app.get('/weather', (request, response) => {
+  try {
+    const getWeather = require('./data/weather.json');
+    const returnObj = getWeather.data.map(day => new Weather(day));
+    response.status(200).send(returnObj);
+  }
+  catch (err) {
+    error(err, response);
+  }
+})
 
 function Location(searchQuery, obj) {
   this.search_query = searchQuery;
