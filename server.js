@@ -26,16 +26,21 @@ app.get('/location', (request, response) => {
 })
 
 app.get('/weather', (request, response) => {
-  try {
-    const search_query = request.query.search_query;
-    const getWeather = require('./data/weather.json');
-    const returnObj = getWeather.data.map(day => new Weather(search_query, day));
-    response.status(200).send(returnObj);
-  }
-  catch (err) {
-    error(err, response);
-  }
+  const lat = request.query.latitude;
+  const lon = request.query.longitude;
+  const key = process.env.WEATHER_API_KEY;
+  console.log(request.query.latitude);
+  const url = `https://api.weatherbit.io/v2.0/forecast/daily?&lat=${lat}&lon=${lon}&key=${key}`;
+  superagent.get(url)
+    .then(results => {
+      const returnObj = results.body.data.map(day => new Weather(day));
+      response.status(200).send(returnObj);
+    }).catch(err => error(err, response));
 })
+
+
+
+
 
 function Location(searchQuery, obj) {
   this.search_query = searchQuery;
@@ -44,8 +49,7 @@ function Location(searchQuery, obj) {
   this.longitude = obj.lon;
 }
 
-function Weather(query, obj) {
-  this.search_query = query;
+function Weather(obj) {
   this.forecast = obj.weather.description;
   this.time = obj.datetime;
 }
