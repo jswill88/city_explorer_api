@@ -70,9 +70,20 @@ Estimate of time needed to complete: 15 minutes
 
 Start time: 2:43pm
 
-Finish time:
+Finish time: 2:49pm
 
-Actual time needed to complete:
+Actual time needed to complete: 6 minutes
+
+
+Number and name of feature: __Locations__
+
+Estimate of time needed to complete: 30 minutes
+
+Start time: 2:50pm
+
+Finish time: 
+
+Actual time needed to complete: 
 
  
 ### Sketches
