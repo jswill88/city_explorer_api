@@ -15,8 +15,9 @@ app.listen(PORT, () => {
 })
 
 app.get('/location', (request, response) => {
-  let search_query = request.query.city;
-  let url = `https://us1.locationiq.com/v1/search.php?key=${process.env.GEOCODE_API_KEY}&q=${search_query}&format=json`;
+  const search_query = request.query.city;
+  const key = process.env.GEOCODE_API_KEY;
+  const url = `https://us1.locationiq.com/v1/search.php?key=${key}&q=${search_query}&format=json`;
   superagent.get(url)
     .then(superAgentResults => {
       let returnObj = new Location(search_query, superAgentResults.body[0]);
