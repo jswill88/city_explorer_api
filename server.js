@@ -27,8 +27,9 @@ app.get('/location', (request, response) => {
 
 app.get('/weather', (request, response) => {
   try {
+    const search_query = request.query.search_query;
     const getWeather = require('./data/weather.json');
-    const returnObj = getWeather.data.map(day => new Weather(day));
+    const returnObj = getWeather.data.map(day => new Weather(search_query, day));
     response.status(200).send(returnObj);
   }
   catch (err) {
@@ -43,7 +44,8 @@ function Location(searchQuery, obj) {
   this.longitude = obj.lon;
 }
 
-function Weather(obj) {
+function Weather(query, obj) {
+  this.search_query = query;
   this.forecast = obj.weather.description;
   this.time = obj.datetime;
 }
