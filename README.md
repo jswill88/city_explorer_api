@@ -15,6 +15,8 @@ This application is built with JavaScript, Node, Heroku, and has JSON data files
 ## Change Log
 06-08-2020 4:17pm - Application now allows the user to enter the name of a city and get the weather and location of Lynnwood, WA.
 
+06-09-2020 4:00pm - Application now brings in data from locationio
+
 <!-- 01-01-2001 4:59pm - Application now has a fully-functional express server, with a GET route for the location resource.  -->
 
 ## Credits and Collaborations
@@ -81,9 +83,20 @@ Estimate of time needed to complete: 30 minutes
 
 Start time: 2:50pm
 
-Finish time: 
+Finish time: 3:59pm
 
-Actual time needed to complete: 
+Actual time needed to complete: 1 hour 59 minutes
+
+
+Number and name of feature: __Weather__
+
+Estimate of time needed to complete: 30 minutes
+
+Start time: 3:59pm
+
+Finish time:
+
+Actual time needed to complete:
 
  
 ### Sketches
