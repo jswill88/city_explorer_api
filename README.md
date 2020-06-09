@@ -61,4 +61,20 @@ Start time: 3:57pm
 
 Finish time: 4:12pm 
 
-Actual time needed to complete: 15 minutes
+Actual time needed to complete: 15 minutes 
+
+
+Number and name of feature: __Data Formatting__
+
+Estimate of time needed to complete: 15 minutes
+
+Start time: 2:43pm
+
+Finish time:
+
+Actual time needed to complete:
+
+ 
+### Sketches
+Lab 07:
+![](./images/lab07sketch.jpeg)
