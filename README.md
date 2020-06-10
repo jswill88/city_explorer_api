@@ -85,7 +85,7 @@ Start time: 2:50pm
 
 Finish time: 3:59pm
 
-Actual time needed to complete: 1 hour 59 minutes
+Actual time needed to complete: 1 hour 19 minutes
 
 
 Number and name of feature: __Weather__
@@ -94,9 +94,20 @@ Estimate of time needed to complete: 30 minutes
 
 Start time: 3:59pm
 
-Finish time:
+Finish time: 4:47pm
 
-Actual time needed to complete:
+Actual time needed to complete: 48 minutes
+
+
+Number and name of feature: __Trails__
+
+Estimate of time needed to complete: 30 minutes
+
+Start time: 4:50pm
+
+Finish time: 5:37pm
+
+Actual time needed to complete: 47 minutes
 
  
 ### Sketches

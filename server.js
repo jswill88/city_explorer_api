@@ -29,7 +29,6 @@ app.get('/weather', (request, response) => {
   const lat = request.query.latitude;
   const lon = request.query.longitude;
   const key = process.env.WEATHER_API_KEY;
-  console.log(request.query.latitude);
   const url = `https://api.weatherbit.io/v2.0/forecast/daily?&lat=${lat}&lon=${lon}&key=${key}`;
   superagent.get(url)
     .then(results => {
@@ -38,9 +37,18 @@ app.get('/weather', (request, response) => {
     }).catch(err => error(err, response));
 })
 
-
-
-
+app.get('/trails', (request,response) => {
+  const lat = request.query.latitude;
+  const lon = request.query.longitude;
+  const key = process.env.TRAIL_API_KEY;
+  const url = `https://www.hikingproject.com/data/get-trails?lat=${lat}&lon=${lon}&maxDistance=10&key=${key}`;
+  superagent.get(url)
+    .then(results => {
+      console.log(results.body.trails);
+      const returnObj = results.body.trails.map(trail => new Trail(trail));
+      response.status(200).send(returnObj);
+    }).catch(err => error(err, response));
+})
 
 function Location(searchQuery, obj) {
   this.search_query = searchQuery;
@@ -52,6 +60,19 @@ function Location(searchQuery, obj) {
 function Weather(obj) {
   this.forecast = obj.weather.description;
   this.time = obj.datetime;
+}
+
+function Trail(obj) {
+  this.name = obj.name;
+  this.location = obj.location;
+  this.length = obj.length;
+  this.stars = obj.stars;
+  this.star_votes = obj.starVotes;
+  this.summary = obj.summary;
+  this.trail_url = obj.url;
+  this.conditions = obj.conditionDetails;
+  this.date = new Date(obj.conditionDate).getDate();
+  this.time = new Date(obj.conditionDate).getHours();
 }
 
 // 500 error message
