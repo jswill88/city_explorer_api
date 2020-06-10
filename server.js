@@ -44,7 +44,6 @@ app.get('/trails', (request,response) => {
   const url = `https://www.hikingproject.com/data/get-trails?lat=${lat}&lon=${lon}&maxDistance=10&key=${key}`;
   superagent.get(url)
     .then(results => {
-      console.log(results.body.trails);
       const returnObj = results.body.trails.map(trail => new Trail(trail));
       response.status(200).send(returnObj);
     }).catch(err => error(err, response));
@@ -71,8 +70,8 @@ function Trail(obj) {
   this.summary = obj.summary;
   this.trail_url = obj.url;
   this.conditions = obj.conditionDetails;
-  this.date = new Date(obj.conditionDate).getDate();
-  this.time = new Date(obj.conditionDate).getHours();
+  this.condition_date = (new Date(obj.conditionDate)).toLocaleDateString();
+  this.condition_time = (new Date(obj.conditionDate)).toLocaleTimeString();
 }
 
 // 500 error message
