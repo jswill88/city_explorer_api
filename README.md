@@ -15,7 +15,9 @@ This application is built with JavaScript, Node, Heroku, and has JSON data files
 ## Change Log
 06-08-2020 4:17pm - Application now allows the user to enter the name of a city and get the weather and location of Lynnwood, WA.
 
-06-09-2020 4:00pm - Application now brings in data from locationio
+06-09-2020 4:00pm - Application now brings in data from locations
+
+06-09-2020 5:44pm - Application displays data for weather and trails
 
 <!-- 01-01-2001 4:59pm - Application now has a fully-functional express server, with a GET route for the location resource.  -->
 
