@@ -14,10 +14,6 @@ const PORT = process.env.PORT || 3001;
 const client = new pg.Client(process.env.DATABASE_URL);
 client.on('error', err => console.log(err));
 
-// app.listen(PORT, () => {
-//   console.log(`listening on ${PORT}`);
-// })
-
 app.get('/location', (request, response) => {
   const city = request.query.city;
 
