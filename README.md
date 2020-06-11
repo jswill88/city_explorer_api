@@ -143,9 +143,9 @@ Estimate of time needed to complete: 30 minutes
 
 Start time: 6:22pm
 
-Finish time:
+Finish time: 6:47pm
 
-Actual time needed to complete:
+Actual time needed to complete: 25 minutes
 
 ### Sketches
 Lab 07:
