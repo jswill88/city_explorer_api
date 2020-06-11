@@ -4,26 +4,49 @@ const express = require('express');
 require('dotenv').config();
 const cors = require('cors');
 const superagent = require('superagent');
+const pg = require('pg');
 
 const app = express();
 app.use(cors());
 
 const PORT = process.env.PORT || 3001;
 
-app.listen(PORT, () => {
-  console.log(`listening on ${PORT}`);
-})
+const client = new pg.Client(process.env.DATABASE_URL);
+client.on('error', err => console.log(err));
+
+// app.listen(PORT, () => {
+//   console.log(`listening on ${PORT}`);
+// })
 
 app.get('/location', (request, response) => {
-  const search_query = request.query.city;
-  const key = process.env.GEOCODE_API_KEY;
-  const url = `https://us1.locationiq.com/v1/search.php?key=${key}&q=${search_query}&format=json`;
-  superagent.get(url)
-    .then(superAgentResults => {
-      let returnObj = new Location(search_query, superAgentResults.body[0]);
-      response.status(200).send(returnObj);
-    }).catch(err => error(err, response));
+  const city = request.query.city;
+
+  let checkForCity = 'SELECT * FROM city WHERE search_query = $1;';
+  let safeValue = [city];
+  client.query(checkForCity, safeValue)
+    .then(callback => {
+      if (callback.rowCount) {
+        console.log('checking database');
+        response.status(200).send(callback.rows[0]);
+      } else {
+        const key = process.env.GEOCODE_API_KEY;
+        const url = `https://us1.locationiq.com/v1/search.php?key=${key}&q=${city}&format=json`;
+        superagent.get(url)
+          .then(superAgentResults => {
+            let returnObj = new Location(city, superAgentResults.body[0]);
+            console.log('checking superagent');
+
+            let sqlQuery = 'INSERT INTO city (search_query, formatted_query,latitude, longitude) VALUES ($1, $2, $3, $4);';
+            let safeValue = [returnObj.search_query, returnObj.formatted_query, returnObj.latitude, returnObj.longitude];
+            client.query(sqlQuery, safeValue).catch(err => console.log(err));
+
+            response.status(200).send(returnObj);
+
+          }).catch(err => error(err, response));
+      }
+    })
 })
+
 
 app.get('/weather', (request, response) => {
   const lat = request.query.latitude;
@@ -37,7 +60,7 @@ app.get('/weather', (request, response) => {
     }).catch(err => error(err, response));
 })
 
-app.get('/trails', (request,response) => {
+app.get('/trails', (request, response) => {
   const lat = request.query.latitude;
   const lon = request.query.longitude;
   const key = process.env.TRAIL_API_KEY;
@@ -48,6 +71,9 @@ app.get('/trails', (request,response) => {
       response.status(200).send(returnObj);
     }).catch(err => error(err, response));
 })
+
+
+
 
 function Location(searchQuery, obj) {
   this.search_query = searchQuery;
@@ -84,3 +110,10 @@ function error(err, response) {
 app.get('*', (request, response) => {
   response.status(404).send('sorry, this route does not exist');
 })
+
+client.connect()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`listening on ${PORT}`);
+    })
+  })

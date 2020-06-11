@@ -19,10 +19,12 @@ This application is built with JavaScript, Node, Heroku, and has JSON data files
 
 06-09-2020 5:44pm - Application displays data for weather and trails
 
-<!-- 01-01-2001 4:59pm - Application now has a fully-functional express server, with a GET route for the location resource.  -->
 
 ## Credits and Collaborations
-<!-- Give credit (and a link) to other people or resources that helped you build this application. -->
+
+Chance Harmon helped me create the ability to check the database to see if the search has already been done on a city.
+
+### June 8
 
 Number and name of feature: __Repository Set Up__
 
@@ -68,6 +70,8 @@ Finish time: 4:12pm
 Actual time needed to complete: 15 minutes 
 
 
+### June 9
+
 Number and name of feature: __Data Formatting__
 
 Estimate of time needed to complete: 15 minutes
@@ -111,7 +115,31 @@ Finish time: 5:37pm
 
 Actual time needed to complete: 47 minutes
 
- 
+### June 10
+
+Number and name of feature: __Database__
+
+Estimate of time needed to complete: 60 minutes
+
+Start time: 3:03pm
+
+Finish time: 3:45pm
+
+Actual time needed to complete: 42 minutes
+
+Number and name of feature: __Server__
+
+Estimate of time needed to complete: 60 minutes
+
+Start time: 3:46pm
+
+Finish time: 6:14pm
+
+Actual time needed to complete: 2 hours 28 minutes
+
 ### Sketches
 Lab 07:
 ![](./images/lab07sketch.jpeg)
+
+Lab 08:
+![](./images/lab08sketch.jpeg)
