@@ -137,6 +137,16 @@ Finish time: 6:14pm
 
 Actual time needed to complete: 2 hours 28 minutes
 
+Number and name of feature: __Deployment__
+
+Estimate of time needed to complete: 30 minutes
+
+Start time: 6:22pm
+
+Finish time:
+
+Actual time needed to complete:
+
 ### Sketches
 Lab 07:
 ![](./images/lab07sketch.jpeg)
