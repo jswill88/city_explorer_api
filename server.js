@@ -38,7 +38,7 @@ app.get('/location', (request, response) => {
 
             response.status(200).send(returnObj);
 
-          }).catch(err => error(err, response));
+          }).catch(err => console.error(err, response)); // Look at later
       }
     })
 })
@@ -68,6 +68,18 @@ app.get('/trails', (request, response) => {
     }).catch(err => error(err, response));
 })
 
+app.get('movies', (request,response) => {
+  const city = request.query.search_query;
+  const key = process.env.MOVIE_API_KEY;
+  const url = 'https://api.themoviedb.org/3/search/movie';
+  const queryParams = {
+    api_key: key,
+    query: city
+  };
+  superagent.get(url)
+    .query(queryParams)
+    .then(movieResults => )
+})
 
 
 
@@ -94,6 +106,15 @@ function Trail(obj) {
   this.conditions = obj.conditionDetails;
   this.condition_date = (new Date(obj.conditionDate)).toLocaleDateString();
   this.condition_time = (new Date(obj.conditionDate)).toLocaleTimeString();
+}
+
+function Movie(obj) {
+  this.title = obj.
+  this.overview = obj.
+  this.average_votes = obj.
+  this.total_votes = obj.
+  this.image_url = obj.
+  this.releasedOn = obj.
 }
 
 // 500 error message
