@@ -38,7 +38,7 @@ app.get('/location', (request, response) => {
 
             response.status(200).send(returnObj);
 
-          }).catch(err => console.error(err, response)); // Look at later
+          }).catch(err => error(err, response)); // Look at later
       }
     })
 })
@@ -68,17 +68,21 @@ app.get('/trails', (request, response) => {
     }).catch(err => error(err, response));
 })
 
-app.get('movies', (request,response) => {
+app.get('/movies', (request,response) => {
   const city = request.query.search_query;
   const key = process.env.MOVIE_API_KEY;
-  const url = 'https://api.themoviedb.org/3/search/movie';
+  const url = 'https://api.themoviedb.org/3/search/movie/';
   const queryParams = {
     api_key: key,
     query: city
   };
   superagent.get(url)
     .query(queryParams)
-    .then(movieResults => )
+    .then(movieResults => {
+      const movieArray = movieResults.body.results
+        .map(movieObj => new Movie(movieObj));
+      response.status(200).send(movieArray);
+    }).catch(err => error(err, response));
 })
 
 
@@ -109,12 +113,12 @@ function Trail(obj) {
 }
 
 function Movie(obj) {
-  this.title = obj.
-  this.overview = obj.
-  this.average_votes = obj.
-  this.total_votes = obj.
-  this.image_url = obj.
-  this.releasedOn = obj.
+  this.title = obj.original_title,
+  this.overview = obj.overview
+  this.average_votes = obj.vote_average
+  this.total_votes = obj.vote_count,
+  this.image_url = `https://image.tmdb.org/t/p/w500${obj.poster_path}`,
+  this.releasedOn = obj.release_date
 }
 
 // 500 error message

@@ -147,6 +147,28 @@ Finish time: 6:47pm
 
 Actual time needed to complete: 25 minutes
 
+### June 11
+
+Number and name of feature: __Movies__
+
+Estimate of time needed to complete: 1 hour
+
+Start time: 2:40pm
+
+Finish time: 3:38pm
+
+Actual time needed to complete: 58 minutes
+
+Number and name of feature: __Yelp__
+
+Estimate of time needed to complete: 1 hour
+
+Start time: 3:40pm
+
+Finish time: 
+
+Actual time needed to complete:
+
 ### Sketches
 Lab 07:
 ![](./images/lab07sketch.jpeg)
