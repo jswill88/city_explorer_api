@@ -4,13 +4,12 @@
 **Version**: 1.0.0 (increment the patch/fix version number if you make more commits past your first submission)
 
 ## Overview
-This app lets you put in a city name and get info about its location and weather.
+This app lets you put in a city name and get info about its location, weather, hiking trails, restaurants, and movies related to the city. 
 
 ## Getting Started
-<!-- What are the steps that a user must take in order to build this app on their own machine and get it running? -->
 
 ## Architecture
-This application is built with JavaScript, Node, Heroku, and has JSON data files. 
+This application is built with JavaScript, Node, Heroku, SQL, and has JSON data files. 
 
 ## Change Log
 06-08-2020 4:17pm - Application now allows the user to enter the name of a city and get the weather and location of Lynnwood, WA.
@@ -18,6 +17,8 @@ This application is built with JavaScript, Node, Heroku, and has JSON data files
 06-09-2020 4:00pm - Application now brings in data from locations
 
 06-09-2020 5:44pm - Application displays data for weather and trails
+
+06-10-2020 6:45pm - Application now has data for Yelp and the Movie Database.
 
 
 ## Credits and Collaborations
@@ -94,7 +95,7 @@ Finish time: 3:59pm
 Actual time needed to complete: 1 hour 19 minutes
 
 
-Number and name of feature: __Weather__
+Number and name of feature: __Weather and Pagination__
 
 Estimate of time needed to complete: 30 minutes
 
@@ -165,9 +166,9 @@ Estimate of time needed to complete: 1 hour
 
 Start time: 3:40pm
 
-Finish time: 
+Finish time: 5:50pm
 
-Actual time needed to complete:
+Actual time needed to complete: 2 hours 20 minutes
 
 ### Sketches
 Lab 07:
@@ -175,3 +176,6 @@ Lab 07:
 
 Lab 08:
 ![](./images/lab08sketch.jpeg)
+
+Lab 09:
+![](./images/lab09sketch.jpeg)

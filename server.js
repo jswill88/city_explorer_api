@@ -6,7 +6,6 @@ const cors = require('cors');
 const superagent = require('superagent');
 const pg = require('pg');
 
-
 const app = express();
 app.use(cors());
 
@@ -15,9 +14,15 @@ const PORT = process.env.PORT || 3001;
 const client = new pg.Client(process.env.DATABASE_URL);
 client.on('error', err => console.log(err));
 
-app.get('/location', (request, response) => {
-  const city = request.query.city;
+app.get('/location', locationHandler);
+app.get('/weather', weatherHandler);
+app.get('/trails', trailsHandler);
+app.get('/movies', moviesHandler);
+app.get('/yelp', yelpHandler);
 
+function locationHandler(request, response) {
+  const city = request.query.city;
+  // Check database for city
   let checkForCity = 'SELECT * FROM city WHERE search_query = $1;';
   let safeValue = [city];
   client.query(checkForCity, safeValue)
@@ -32,49 +37,49 @@ app.get('/location', (request, response) => {
           .then(superAgentResults => {
             let returnObj = new Location(city, superAgentResults.body[0]);
             console.log('checking superagent');
-
+            // Add new city from superagent to database
             let sqlQuery = 'INSERT INTO city (search_query, formatted_query,latitude, longitude) VALUES ($1, $2, $3, $4);';
             let safeValue = [returnObj.search_query, returnObj.formatted_query, returnObj.latitude, returnObj.longitude];
             client.query(sqlQuery, safeValue).catch(err => console.log(err));
-
             response.status(200).send(returnObj);
           }).catch(err => error(err, response));
       }
     })
-})
+}
 
-
-app.get('/weather', (request, response) => {
-  const lat = request.query.latitude;
-  const lon = request.query.longitude;
-  const key = process.env.WEATHER_API_KEY;
-  const url = `https://api.weatherbit.io/v2.0/forecast/daily?&lat=${lat}&lon=${lon}&key=${key}`;
-  superagent.get(url)
+function weatherHandler(request,response) {
+  const url = `https://api.weatherbit.io/v2.0/forecast/daily`
+  const queryParams = {
+    lat: request.query.latitude,
+    lon:request.query.longitude,
+    key:process.env.WEATHER_API_KEY
+  }
+  superagent.get(url).query(queryParams)
     .then(results => {
       const returnObj = results.body.data.map(day => new Weather(day));
       response.status(200).send(returnObj);
     }).catch(err => error(err, response));
-})
+}
 
-app.get('/trails', (request, response) => {
-  const lat = request.query.latitude;
-  const lon = request.query.longitude;
-  const key = process.env.TRAIL_API_KEY;
-  const url = `https://www.hikingproject.com/data/get-trails?lat=${lat}&lon=${lon}&maxDistance=10&key=${key}`;
-  superagent.get(url)
+function trailsHandler(request, response) {
+  const queryParams = {
+    lat: request.query.latitude,
+    lon: request.query.longitude,
+    key: process.env.TRAIL_API_KEY
+  }
+  const url = `https://www.hikingproject.com/data/get-trails`;
+  superagent.get(url).query(queryParams)
     .then(results => {
       const returnObj = results.body.trails.map(trail => new Trail(trail));
       response.status(200).send(returnObj);
     }).catch(err => error(err, response));
-})
+}
 
-app.get('/movies', (request, response) => {
-  const city = request.query.search_query;
-  const key = process.env.MOVIE_API_KEY;
+function moviesHandler(request, response){
   const url = 'https://api.themoviedb.org/3/search/movie/';
   const queryParams = {
-    api_key: key,
-    query: city
+    api_key: process.env.MOVIE_API_KEY,
+    query: request.query.search_query
   };
   superagent.get(url)
     .query(queryParams)
@@ -83,32 +88,27 @@ app.get('/movies', (request, response) => {
         .map(movieObj => new Movie(movieObj));
       response.status(200).send(movieArray);
     }).catch(err => error(err, response));
-})
+}
 
-app.get('/yelp', (request, response) => {
+function yelpHandler(request,response) {
   const key = process.env.YELP_API_KEY;
-  const lat = request.query.latitude;
-  const lon = request.query.longitude;
-
   const page = request.query.page;
   const numPerPage = 5;
   const start = (page - 1) * numPerPage;
-
   const url = 'https://api.yelp.com/v3/businesses/search'
   const queryParams = {
-    latitude: lat,
-    longitude: lon,
+    latitude: request.query.latitude,
+    longitude: request.query.longitude,
     categories: 'food',
     offset: start,
     limit: numPerPage
   };
-
   superagent.get(url).set('Authorization', `Bearer ${key}`).query(queryParams).then(query => {
     const restaurantArray = query.body.businesses
       .map(business => new Restaurant(business));
     response.status(200).send(restaurantArray);
   }).catch(err => error(err, response));
-})
+}
 
 function Location(searchQuery, obj) {
   this.search_query = searchQuery;
@@ -151,7 +151,6 @@ function Restaurant(obj) {
   this.rating = obj.rating,
   this.url = obj.url
 }
-
 
 // 500 error message
 function error(err, response) {
