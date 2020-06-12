@@ -6,6 +6,7 @@ const cors = require('cors');
 const superagent = require('superagent');
 const pg = require('pg');
 
+
 const app = express();
 app.use(cors());
 
@@ -37,7 +38,6 @@ app.get('/location', (request, response) => {
             client.query(sqlQuery, safeValue).catch(err => console.log(err));
 
             response.status(200).send(returnObj);
-
           }).catch(err => error(err, response));
       }
     })
@@ -68,8 +68,47 @@ app.get('/trails', (request, response) => {
     }).catch(err => error(err, response));
 })
 
+app.get('/movies', (request, response) => {
+  const city = request.query.search_query;
+  const key = process.env.MOVIE_API_KEY;
+  const url = 'https://api.themoviedb.org/3/search/movie/';
+  const queryParams = {
+    api_key: key,
+    query: city
+  };
+  superagent.get(url)
+    .query(queryParams)
+    .then(movieResults => {
+      const movieArray = movieResults.body.results
+        .map(movieObj => new Movie(movieObj));
+      response.status(200).send(movieArray);
+    }).catch(err => error(err, response));
+})
 
+app.get('/yelp', (request, response) => {
+  const key = process.env.YELP_API_KEY;
+  const lat = request.query.latitude;
+  const lon = request.query.longitude;
 
+  const page = request.query.page;
+  const numPerPage = 5;
+  const start = (page - 1) * numPerPage;
+
+  const url = 'https://api.yelp.com/v3/businesses/search'
+  const queryParams = {
+    latitude: lat,
+    longitude: lon,
+    categories: 'food',
+    offset: start,
+    limit: numPerPage
+  };
+
+  superagent.get(url).set('Authorization', `Bearer ${key}`).query(queryParams).then(query => {
+    const restaurantArray = query.body.businesses
+      .map(business => new Restaurant(business));
+    response.status(200).send(restaurantArray);
+  }).catch(err => error(err, response));
+})
 
 function Location(searchQuery, obj) {
   this.search_query = searchQuery;
@@ -95,6 +134,24 @@ function Trail(obj) {
   this.condition_date = (new Date(obj.conditionDate)).toLocaleDateString();
   this.condition_time = (new Date(obj.conditionDate)).toLocaleTimeString();
 }
+
+function Movie(obj) {
+  this.title = obj.original_title,
+  this.overview = obj.overview,
+  this.average_votes = obj.vote_average,
+  this.total_votes = obj.vote_count,
+  this.image_url = `https://image.tmdb.org/t/p/w500${obj.poster_path}`,
+  this.releasedOn = obj.release_date
+}
+
+function Restaurant(obj) {
+  this.name = obj.name,
+  this.image_url = obj.image_url,
+  this.price = obj.price,
+  this.rating = obj.rating,
+  this.url = obj.url
+}
+
 
 // 500 error message
 function error(err, response) {
