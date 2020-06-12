@@ -47,12 +47,12 @@ function locationHandler(request, response) {
     })
 }
 
-function weatherHandler(request,response) {
+function weatherHandler(request, response) {
   const url = `https://api.weatherbit.io/v2.0/forecast/daily`
   const queryParams = {
     lat: request.query.latitude,
-    lon:request.query.longitude,
-    key:process.env.WEATHER_API_KEY
+    lon: request.query.longitude,
+    key: process.env.WEATHER_API_KEY
   }
   superagent.get(url).query(queryParams)
     .then(results => {
@@ -75,7 +75,7 @@ function trailsHandler(request, response) {
     }).catch(err => error(err, response));
 }
 
-function moviesHandler(request, response){
+function moviesHandler(request, response) {
   const url = 'https://api.themoviedb.org/3/search/movie/';
   const queryParams = {
     api_key: process.env.MOVIE_API_KEY,
@@ -90,12 +90,12 @@ function moviesHandler(request, response){
     }).catch(err => error(err, response));
 }
 
-function yelpHandler(request,response) {
+function yelpHandler(request, response) {
   const key = process.env.YELP_API_KEY;
   const page = request.query.page;
   const numPerPage = 5;
   const start = (page - 1) * numPerPage;
-  const url = 'https://api.yelp.com/v3/businesses/search'
+  const url = 'https://api.yelp.com/v3/businesses/search';
   const queryParams = {
     latitude: request.query.latitude,
     longitude: request.query.longitude,
@@ -103,11 +103,12 @@ function yelpHandler(request,response) {
     offset: start,
     limit: numPerPage
   };
-  superagent.get(url).set('Authorization', `Bearer ${key}`).query(queryParams).then(query => {
-    const restaurantArray = query.body.businesses
-      .map(business => new Restaurant(business));
-    response.status(200).send(restaurantArray);
-  }).catch(err => error(err, response));
+  superagent.get(url).set('Authorization', `Bearer ${key}`)
+    .query(queryParams).then(query => {
+      const restaurantArray = query.body.businesses
+        .map(business => new Restaurant(business));
+      response.status(200).send(restaurantArray);
+    }).catch(err => error(err, response));
 }
 
 function Location(searchQuery, obj) {
@@ -160,7 +161,7 @@ function error(err, response) {
 
 // 404 error message
 app.get('*', (request, response) => {
-  response.status(404).send('sorry, this route does not exist');
+  response.status(404).send('Sorry, this route does not exist');
 })
 
 client.connect()
