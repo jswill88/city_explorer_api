@@ -119,7 +119,7 @@ function Location(searchQuery, obj) {
 
 function Weather(obj) {
   this.forecast = obj.weather.description;
-  this.time = obj.datetime;
+  this.time = new Date(obj.datetime).toLocaleDateString();
 }
 
 function Trail(obj) {
